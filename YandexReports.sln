@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexReports", "YandexReports\YandexReports.csproj", "{00DD0A1D-CE56-41CE-8304-5DB59521CC13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00DD0A1D-CE56-41CE-8304-5DB59521CC13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00DD0A1D-CE56-41CE-8304-5DB59521CC13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00DD0A1D-CE56-41CE-8304-5DB59521CC13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00DD0A1D-CE56-41CE-8304-5DB59521CC13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0615817-34DC-405B-A4CC-A68147C0DBCD}
+	EndGlobalSection
+EndGlobal

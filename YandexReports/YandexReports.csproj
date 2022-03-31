@@ -64,6 +64,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddEditDayPage.xaml.cs">
+      <DependentUpon>AddEditDayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditPersonPage.xaml.cs">
+      <DependentUpon>AddEditPersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditReportPage.xaml.cs">
+      <DependentUpon>AddEditReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +111,18 @@
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Page Include="AddEditDayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditPersonPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DayListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

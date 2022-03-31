@@ -22,58 +22,40 @@ namespace YandexReports
         public PeopleListPage()
         {
             InitializeComponent();
-            var DayList = (from d in YandexFoodReportsEntities.GetContext.Day
-                           join r in YandexFoodReportsEntities.GetContext.Report on d.ID equals r.DayID
-                           select new { ID = d.ID, r.AmountDelievery })
-                      .GroupBy(x => x.ID, x => x.AmountDelievery)
-                      .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
-                      .Join(YandexFoodReportsEntities.GetContext.Day, g => g.ID, d => d.ID, (g, d) => new { ID = g.ID, PersonID = d.PersonID, TotalMoney = d.TotalMoney, TotalDelievery = g.TotalDelievery });
-
-            var PersonList = (from p in YandexFoodReportsEntities.GetContext.Person
-                              join d in YandexFoodReportsEntities.GetContext.Day on p.ID equals d.PersonID
-                              select new { PersonID = p.ID, TotalMoney = d.TotalMoney })
-                                .GroupBy(x => x.PersonID, x => x.TotalMoney)
-                                .Select(g => new { ID = g.Key, TotalMoney = g.Sum() })
-                                .Join(YandexFoodReportsEntities.GetContext.Person, g => g.ID, p => p.ID, (g, p) => new { ID = g.ID, Name = p.Name, TotalMoney = g.TotalMoney });
-
-            var dataContext = (from p in PersonList
-                               join d in DayList on p.ID equals d.PersonID
-                               select new { PersonID = p.ID, TotalDelievery = d.TotalDelievery })
-                               .GroupBy(x => x.PersonID, x => x.TotalDelievery)
-                               .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
-                               .Join(PersonList, g => g.ID, p => p.ID, (g, p) => new Persons { ID = g.ID, Name = p.Name, TotalMoney = p.TotalMoney, TotalDelievery = g.TotalDelievery })
-                               .ToList();
-            DGridPeople.ItemsSource = dataContext;
         }
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
             {
-                YandexFoodReportsEntities.GetContext.ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 var DayList = (from d in YandexFoodReportsEntities.GetContext.Day
                                join r in YandexFoodReportsEntities.GetContext.Report on d.ID equals r.DayID
                                select new { ID = d.ID, r.AmountDelievery })
-                      .GroupBy(x => x.ID, x => x.AmountDelievery)
-                      .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
-                      .Join(YandexFoodReportsEntities.GetContext.Day, g => g.ID, d => d.ID, (g, d) => new { ID = g.ID, PersonID = d.PersonID, TotalMoney = d.TotalMoney, TotalDelievery = g.TotalDelievery })
-                      .DefaultIfEmpty();
+                       .GroupBy(x => x.ID, x => x.AmountDelievery)
+                       .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
+                       .Join(YandexFoodReportsEntities.GetContext.Day, g => g.ID, d => d.ID, (g, d) => new { ID = g.ID, PersonID = d.PersonID, TotalMoney = d.TotalMoney, TotalDelievery = g.TotalDelievery });
 
-                var PersonList = (from p in YandexFoodReportsEntities.GetContext.Person
-                                  join d in YandexFoodReportsEntities.GetContext.Day on p.ID equals d.PersonID
-                                  select new { PersonID = p.ID, TotalMoney = d.TotalMoney })
-                                    .GroupBy(x => x.PersonID, x => x.TotalMoney)
-                                    .Select(g => new { ID = g.Key, TotalMoney = g.Sum() })
-                                    .Join(YandexFoodReportsEntities.GetContext.Person, g => g.ID, p => p.ID, (g, p) => new { ID = g.ID, Name = p.Name, TotalMoney = g.TotalMoney })
-                                    .DefaultIfEmpty();
+                var PersonListSelect = from p in YandexFoodReportsEntities.GetContext.Person
+                                       join d in YandexFoodReportsEntities.GetContext.Day on p.ID equals d.PersonID
+                                       select new Persona { PersonID = p.ID, TotalMoney = d.TotalMoney };
 
-                var dataContext = (from p in PersonList
-                                   join d in DayList on p.ID equals d.PersonID
-                                   select new { PersonID = p.ID, TotalDelievery = d.TotalDelievery })
+                var PersonList = PersonListSelect.Concat(YandexFoodReportsEntities.GetContext.Person
+                        .Where(p => PersonListSelect.All(p2 => p2.PersonID != p.ID))
+                        .Select(p => new Persona { PersonID = p.ID, TotalMoney = 0 })
+                        ).GroupBy(x => x.PersonID, x => x.TotalMoney)
+                         .Select(g => new { ID = g.Key, TotalMoney = g.Sum() })
+                         .Join(YandexFoodReportsEntities.GetContext.Person, g => g.ID, p => p.ID, (g, p) => new { ID = g.ID, Name = p.Name, TotalMoney = g.TotalMoney });
+
+                var PersonDelieveryList = from p in PersonList
+                                          join d in DayList on p.ID equals d.PersonID
+                                          select new { PersonID = p.ID, TotalDelievery = d.TotalDelievery };
+
+                var dataContext = PersonDelieveryList
+                                   .Concat(PersonList.Where(p => PersonDelieveryList.All(p2 => p2.PersonID != p.ID)).Select(g => new { PersonID = g.ID, TotalDelievery = 0 }))
                                    .GroupBy(x => x.PersonID, x => x.TotalDelievery)
                                    .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
                                    .Join(PersonList, g => g.ID, p => p.ID, (g, p) => new Persons { ID = g.ID, Name = p.Name, TotalMoney = p.TotalMoney, TotalDelievery = g.TotalDelievery })
-                                   .DefaultIfEmpty()
                                    .ToList();
+
                 DGridPeople.ItemsSource = dataContext;
             }
         }

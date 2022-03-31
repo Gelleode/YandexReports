@@ -12,7 +12,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PersonID" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
-          <Property Name="TotalMoney" Type="money" Nullable="false" />
+          <Property Name="TotalMoney" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -28,11 +28,11 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DayID" Type="int" Nullable="false" />
           <Property Name="AmountDelievery" Type="int" Nullable="false" />
-          <Property Name="MoneyForDelievery" Type="money" Nullable="false" />
-          <Property Name="MoneyForDistance" Type="money" Nullable="false" />
-          <Property Name="Tips" Type="money" Nullable="false" />
-          <Property Name="TipsFromYandex" Type="money" Nullable="false" />
-          <Property Name="TransportCompensation" Type="money" Nullable="false" />
+          <Property Name="MoneyForDelievery" Type="int" Nullable="false" />
+          <Property Name="MoneyForDistance" Type="int" Nullable="false" />
+          <Property Name="Tips" Type="int" Nullable="false" />
+          <Property Name="TipsFromYandex" Type="int" Nullable="false" />
+          <Property Name="TransportCompensation" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -94,7 +94,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PersonID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TotalMoney" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TotalMoney" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Day_Person" FromRole="Day" ToRole="Person" />
           <NavigationProperty Name="Report" Relationship="Self.FK_Report_Day" FromRole="Day" ToRole="Report" />
         </EntityType>
@@ -113,11 +113,11 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DayID" Type="Int32" Nullable="false" />
           <Property Name="AmountDelievery" Type="Int32" Nullable="false" />
-          <Property Name="MoneyForDelievery" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="MoneyForDistance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Tips" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="TipsFromYandex" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="TransportCompensation" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="MoneyForDelievery" Type="Int32" Nullable="false" />
+          <Property Name="MoneyForDistance" Type="Int32" Nullable="false" />
+          <Property Name="Tips" Type="Int32" Nullable="false" />
+          <Property Name="TipsFromYandex" Type="Int32" Nullable="false" />
+          <Property Name="TransportCompensation" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Day" Relationship="Self.FK_Report_Day" FromRole="Report" ToRole="Day" />
         </EntityType>
         <EntityType Name="sysdiagrams">

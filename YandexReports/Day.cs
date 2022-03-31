@@ -23,7 +23,7 @@ namespace YandexReports
         public int ID { get; set; }
         public int PersonID { get; set; }
         public System.DateTime Date { get; set; }
-        public decimal TotalMoney { get; set; }
+        public int TotalMoney { get; set; }
     
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -17,11 +17,11 @@ namespace YandexReports
         public int ID { get; set; }
         public int DayID { get; set; }
         public int AmountDelievery { get; set; }
-        public decimal MoneyForDelievery { get; set; }
-        public decimal MoneyForDistance { get; set; }
-        public decimal Tips { get; set; }
-        public decimal TipsFromYandex { get; set; }
-        public decimal TransportCompensation { get; set; }
+        public int MoneyForDelievery { get; set; }
+        public int MoneyForDistance { get; set; }
+        public int Tips { get; set; }
+        public int TipsFromYandex { get; set; }
+        public int TransportCompensation { get; set; }
     
         public virtual Day Day { get; set; }
     }

@@ -25,15 +25,6 @@ namespace YandexReports
         {
             _currPersonId = currentPerson.ID;
             InitializeComponent();
-            List<Days> DayList = (from d in YandexFoodReportsEntities.GetContext.Day
-                           where d.PersonID == _currPersonId
-                           join r in YandexFoodReportsEntities.GetContext.Report on d.ID equals r.DayID
-                           select new { ID = d.ID, r.AmountDelievery })
-                      .GroupBy(x => x.ID, x => x.AmountDelievery)
-                      .Select(g => new { ID = g.Key, TotalDelievery = g.Sum() })
-                      .Join(YandexFoodReportsEntities.GetContext.Day, g => g.ID, d => d.ID, (g, d) => new Days { ID = g.ID, PersonID = d.PersonID, Date = d.Date, TotalMoney = d.TotalMoney, TotalDelievery = g.TotalDelievery })
-                      .ToList();
-            DGridDays.ItemsSource = DayList;
             //MoneyForDistance 0.5 = 0; 0.51 = 1;
         }
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

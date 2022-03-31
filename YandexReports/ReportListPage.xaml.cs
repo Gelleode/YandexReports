@@ -25,15 +25,14 @@ namespace YandexReports
         {
             _currDayID = currentDay.ID;
             InitializeComponent();
-            List<Report> dataContext = (from r in YandexFoodReportsEntities.GetContext.Report
-                                        where r.DayID == _currDayID
-                                        select r)
-                              .ToList();
-            DGridReports.ItemsSource = dataContext;
         }
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AddEditReportPage(DGridReports.SelectedItem as Report, _currDayID));
+        }
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditReportPage(null, _currDayID));
         }
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -47,7 +46,9 @@ namespace YandexReports
                     YandexFoodReportsEntities.GetContext.SaveChanges();
                     MessageBox.Show("Данные удалены!");
 
-                    DGridReports.ItemsSource = YandexFoodReportsEntities.GetContext.Report.ToList();
+                    DGridReports.ItemsSource = (from r in YandexFoodReportsEntities.GetContext.Report
+                                               where r.DayID == _currDayID
+                                               select r).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -62,13 +63,8 @@ namespace YandexReports
                 YandexFoodReportsEntities.GetContext.ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 DGridReports.ItemsSource = (from r in YandexFoodReportsEntities.GetContext.Report
                                             where r.DayID == _currDayID
-                                            select r)
-                              .ToList();
+                                            select r).ToList();
             }
-        }
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
